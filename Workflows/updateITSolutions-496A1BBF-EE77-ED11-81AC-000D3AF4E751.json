@@ -1,0 +1,1069 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "rpdudev_sharedcommondataserviceforapps_a383e"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "Recurrence": {
+          "recurrence": {
+            "frequency": "Day",
+            "interval": 1,
+            "startTime": "2022-12-10T05:00:00Z"
+          },
+          "metadata": {
+            "operationMetadataId": "fb975e0c-0348-4a98-987b-4ef44d1ec7c2"
+          },
+          "type": "Recurrence"
+        }
+      },
+      "actions": {
+        "Initialize_variable": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "708b912f-9c0c-4e03-9d5b-1e856b86daca"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "isNew",
+                "type": "boolean",
+                "value": "@true"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_2": {
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "948238c7-45c5-403a-9cbd-8caee1363955"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "guid",
+                "type": "string",
+                "value": "\"\""
+              }
+            ]
+          }
+        },
+        "List_rows": {
+          "runAfter": {
+            "Initialize_variable_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "196c2ee3-7529-49c4-bf56-ba615f042e57"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "ListRecords",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "cr9fa_itsolutions"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "HTTP": {
+          "runAfter": {
+            "List_rows": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f786f7d9-90b7-4e37-82e8-8bfa490a7d76"
+          },
+          "type": "Http",
+          "inputs": {
+            "method": "PATCH",
+            "uri": "https://smapiuat-ontariogovuat.msappproxy.net/api/RemedyAsset/SearchApplicationsCustom",
+            "headers": {
+              "X-ApiKey": "44b80f81-19bb-4ca2-a425-4b85a52dfb0c"
+            },
+            "body": {
+              "Fields": [],
+              "MaxResults": 1500,
+              "Parameters": [
+                {
+                  "Combine": "And",
+                  "Property": "Status",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Deployed"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier1",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Solution"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier2",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Application Solution"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier3",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Business Support"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "Parse_JSON": {
+          "runAfter": {
+            "HTTP": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d408039f-f965-4eb2-9c4a-79ae5b9769e7"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('HTTP')",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "OwnershipType": {
+                    "type": "string"
+                  },
+                  "ApplicationType": {
+                    "type": "string"
+                  },
+                  "CI_ID": {
+                    "type": "string"
+                  },
+                  "AssetClass": {
+                    "type": "string"
+                  },
+                  "Status": {
+                    "type": "string"
+                  },
+                  "AssigneeGroupPermissions": {
+                    "type": "string"
+                  },
+                  "ASTAttributeInstanceId": {
+                    "type": "string"
+                  },
+                  "BookValue": {
+                    "type": "integer"
+                  },
+                  "Site": {
+                    "type": "string"
+                  },
+                  "ProductCategorizationTier1": {
+                    "type": "string"
+                  },
+                  "ClassId": {
+                    "type": "string"
+                  },
+                  "Company": {
+                    "type": "string"
+                  },
+                  "Cost": {
+                    "type": "integer"
+                  },
+                  "CostCenter": {
+                    "type": "string"
+                  },
+                  "CreateDate": {
+                    "type": "string"
+                  },
+                  "CurrentState": {
+                    "type": "string"
+                  },
+                  "DataSetId": {
+                    "type": "string"
+                  },
+                  "Depreciated": {
+                    "type": "string"
+                  },
+                  "ExternalProgramNumber": {
+                    "type": "string"
+                  },
+                  "FailedAutomaticIdentification": {
+                    "type": "string"
+                  },
+                  "FixedAsset": {
+                    "type": "string"
+                  },
+                  "Floor": {
+                    "type": "string"
+                  },
+                  "Impact": {
+                    "type": "string"
+                  },
+                  "ImpactComputationModel": {
+                    "type": "string"
+                  },
+                  "InstallationDate": {
+                    "type": "string"
+                  },
+                  "InstanceId": {
+                    "type": "string"
+                  },
+                  "Inventory": {
+                    "type": "string"
+                  },
+                  "ProductCategorizationTier3": {
+                    "type": "string"
+                  },
+                  "LastModifiedBy": {
+                    "type": "string"
+                  },
+                  "Manufacturer": {
+                    "type": "string"
+                  },
+                  "MarketValue": {
+                    "type": "integer"
+                  },
+                  "MGSCIID": {
+                    "type": "string"
+                  },
+                  "MGSFromEIT": {
+                    "type": "string"
+                  },
+                  "ProductName": {
+                    "type": "string"
+                  },
+                  "ModifiedDate": {
+                    "type": "string"
+                  },
+                  "CI_Name": {
+                    "type": "string"
+                  },
+                  "NormalizationStatus": {
+                    "type": "string"
+                  },
+                  "NotesLog": {
+                    "type": "string"
+                  },
+                  "ApplicationArchitecture": {
+                    "type": "string"
+                  },
+                  "AssuranceLevel": {
+                    "type": "string"
+                  },
+                  "AuthenticationType": {
+                    "type": "string"
+                  },
+                  "AvailabilityRequired": {
+                    "type": "string"
+                  },
+                  "BusinessValue": {
+                    "type": "string"
+                  },
+                  "ChangeWindow": {
+                    "type": "string"
+                  },
+                  "ClusterPortfolio": {
+                    "type": "string"
+                  },
+                  "ComplianceFunction": {
+                    "type": "string"
+                  },
+                  "CriticalBusinessPeriod": {
+                    "type": "string"
+                  },
+                  "Criticality": {
+                    "type": "string"
+                  },
+                  "DBSupport": {
+                    "type": "string"
+                  },
+                  "DevType": {
+                    "type": "string"
+                  },
+                  "FuturePlans": {
+                    "type": "string"
+                  },
+                  "HighAvailability": {
+                    "type": "string"
+                  },
+                  "HostingEnvName": {
+                    "type": "string"
+                  },
+                  "NonProdSupport": {
+                    "type": "string"
+                  },
+                  "OldestDBName": {
+                    "type": "string"
+                  },
+                  "OldestOSPlatform": {
+                    "type": "string"
+                  },
+                  "OrgAccountability": {
+                    "type": "string"
+                  },
+                  "ProdDCName": {
+                    "type": "string"
+                  },
+                  "ProdSupport": {
+                    "type": "string"
+                  },
+                  "OPSProductSubcategory": {
+                    "type": "string"
+                  },
+                  "PublicFacing": {
+                    "type": "string"
+                  },
+                  "ScopeOfApplication": {
+                    "type": "string"
+                  },
+                  "ServerOSSupport": {
+                    "type": "string"
+                  },
+                  "UsageType": {
+                    "type": "string"
+                  },
+                  "Priority": {
+                    "type": "string"
+                  },
+                  "ReceivedDate": {
+                    "type": "string"
+                  },
+                  "ReconciliationIdentity": {
+                    "type": "string"
+                  },
+                  "ReconciliationMergeStatus": {
+                    "type": "string"
+                  },
+                  "Region": {
+                    "type": "string"
+                  },
+                  "RequestID": {
+                    "type": "string"
+                  },
+                  "SalesTax": {
+                    "type": "integer"
+                  },
+                  "ScheduleType": {
+                    "type": "string"
+                  },
+                  "CI_Description": {
+                    "type": "string"
+                  },
+                  "SiteGroup": {
+                    "type": "string"
+                  },
+                  "StatusReason": {
+                    "type": "string"
+                  },
+                  "Submitter": {
+                    "type": "string"
+                  },
+                  "Supported": {
+                    "type": "string"
+                  },
+                  "TaxCredit": {
+                    "type": "integer"
+                  },
+                  "TokenId": {
+                    "type": "string"
+                  },
+                  "TotalPurchaseCost": {
+                    "type": "integer"
+                  },
+                  "ProductCategorizationTier2": {
+                    "type": "string"
+                  },
+                  "UnitPrice": {
+                    "type": "integer"
+                  },
+                  "UserDisplayObjectName": {
+                    "type": "string"
+                  },
+                  "ModelVersion": {
+                    "type": "string"
+                  },
+                  "WriteSecurity": {
+                    "type": "string"
+                  },
+                  "Y2KCompliant": {
+                    "type": "string"
+                  },
+                  "Relationships": {
+                    "type": "array"
+                  },
+                  "OPSApplicationType": {
+                    "type": "string"
+                  },
+                  "AvailabilitySupported": {
+                    "type": "string"
+                  },
+                  "OPSMajorBusFunction": {
+                    "type": "string"
+                  },
+                  "NumberOfUsers": {
+                    "type": "integer"
+                  },
+                  "Urgency": {
+                    "type": "string"
+                  },
+                  "CITag": {
+                    "type": "string"
+                  },
+                  "AdditionalInformation": {
+                    "type": "string"
+                  },
+                  "DataSensitivityRating": {
+                    "type": "string"
+                  },
+                  "OPSSensitivityData": {
+                    "type": "string"
+                  },
+                  "TagNumber": {
+                    "type": "string"
+                  },
+                  "PrimaryCapability": {
+                    "type": "string"
+                  },
+                  "AODACompliant": {
+                    "type": "string"
+                  },
+                  "BusinessContinuityPlan": {
+                    "type": "string"
+                  },
+                  "DisasterRecoveryPlan": {
+                    "type": "string"
+                  },
+                  "MAPSIdentified": {
+                    "type": "string"
+                  },
+                  "PIACompleted": {
+                    "type": "string"
+                  },
+                  "ProcessingType": {
+                    "type": "string"
+                  },
+                  "RevenueGenerating": {
+                    "type": "string"
+                  },
+                  "SLAInPlace": {
+                    "type": "string"
+                  },
+                  "SupportsLegislatedFunction": {
+                    "type": "string"
+                  },
+                  "TRACompleted": {
+                    "type": "string"
+                  },
+                  "SystemRole": {
+                    "type": "string"
+                  },
+                  "AvailableDate": {
+                    "type": "string"
+                  },
+                  "RecoveryPointObjective": {
+                    "type": "string"
+                  },
+                  "RecoveryTimeObjectives": {
+                    "type": "string"
+                  },
+                  "AdequateOffsiteBackupRestore": {
+                    "type": "string"
+                  },
+                  "ApplicationMakeup": {
+                    "type": "string"
+                  },
+                  "AvailabilityExternal": {
+                    "type": "string"
+                  },
+                  "AvailabilityFunded": {
+                    "type": "string"
+                  },
+                  "AvailabilityInternal": {
+                    "type": "string"
+                  },
+                  "DatePlannedRetirement": {
+                    "type": "string"
+                  },
+                  "DegradedPerformanceAllowed": {
+                    "type": "string"
+                  },
+                  "HostingArrangement": {
+                    "type": "string"
+                  },
+                  "NumberOfUsersExternal": {
+                    "type": "string"
+                  },
+                  "NumberOfUsersOPS": {
+                    "type": "string"
+                  },
+                  "OPSArchitectureGating": {
+                    "type": "string"
+                  },
+                  "PersonalInformationHandled": {
+                    "type": "string"
+                  },
+                  "DateLastUpgradedFunctionality": {
+                    "type": "string"
+                  },
+                  "OffsiteBackupRestore": {
+                    "type": "string"
+                  },
+                  "SerialNumber": {
+                    "type": "string"
+                  },
+                  "NetNewRefresh": {
+                    "type": "string"
+                  },
+                  "FFSCost": {
+                    "type": "integer"
+                  },
+                  "HostingCost": {
+                    "type": "integer"
+                  },
+                  "LicensingCost": {
+                    "type": "integer"
+                  },
+                  "SystemEnvironment": {
+                    "type": "string"
+                  },
+                  "FTECost": {
+                    "type": "integer"
+                  },
+                  "OwnerName": {
+                    "type": "string"
+                  },
+                  "PartNumber": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "OwnershipType",
+                  "ApplicationType",
+                  "CI_ID",
+                  "AssetClass",
+                  "Status",
+                  "AssigneeGroupPermissions",
+                  "ASTAttributeInstanceId",
+                  "BookValue",
+                  "ProductCategorizationTier1",
+                  "ClassId",
+                  "Company",
+                  "Cost",
+                  "CostCenter",
+                  "CreateDate",
+                  "DataSetId",
+                  "Depreciated",
+                  "FailedAutomaticIdentification",
+                  "FixedAsset",
+                  "ImpactComputationModel",
+                  "InstallationDate",
+                  "InstanceId",
+                  "Inventory",
+                  "ProductCategorizationTier3",
+                  "LastModifiedBy",
+                  "MarketValue",
+                  "MGSCIID",
+                  "MGSFromEIT",
+                  "ModifiedDate",
+                  "CI_Name",
+                  "NormalizationStatus",
+                  "ReconciliationIdentity",
+                  "RequestID",
+                  "SalesTax",
+                  "ScheduleType",
+                  "CI_Description",
+                  "Submitter",
+                  "Supported",
+                  "TaxCredit",
+                  "TokenId",
+                  "TotalPurchaseCost",
+                  "ProductCategorizationTier2",
+                  "UnitPrice",
+                  "UserDisplayObjectName",
+                  "Y2KCompliant",
+                  "Relationships"
+                ]
+              }
+            }
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@body('Parse_JSON')",
+          "actions": {
+            "assume_the_solution_is_new": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "72a45789-bcdb-4637-9403-592bb2c6e78a"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "isNew",
+                "value": "@true"
+              }
+            },
+            "If_the_cluster_is_new": {
+              "actions": {
+                "Add_new_Status_Reason": {
+                  "runAfter": {
+                    "Add_new_Solution_Status": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "d74d496c-473f-400e-b516-da5827bc3186"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmstatusreasons",
+                      "item/cr9fa_name": "\"\"",
+                      "item/rpdudev_statusreason": "@items('Apply_to_each')?['StatusReason']",
+                      "item/cr9fa_apmstatusreasonid": "@variables('guid')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Add_new_Solution_Status": {
+                  "runAfter": {
+                    "Add_new_IT_Solution_2": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "12e18997-67d6-49a7-bdbb-6331cb3b5494"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutionstatuses",
+                      "item/cr9fa_statuseffectivedate": "@utcNow()",
+                      "item/cr9fa_apmsolutionstatusid": "@variables('guid')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Add_new_Solution_Technical_Info": {
+                  "runAfter": {
+                    "Add_new_Solution_Status_Type": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "257dafcb-c798-4604-8c17-a163e8edf60e"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutiontechnicalinfos",
+                      "item/cr9fa_name": "@items('Apply_to_each')?['ApplicationArchitecture']",
+                      "item/cr9fa_solutiondevelopmenttypecode": "@items('Apply_to_each')?['DevType']",
+                      "item/cr9fa_apmsolutiontechnicalinfoid": "@variables('guid')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Add_new_Solution_Status_Type": {
+                  "runAfter": {
+                    "Add_new_Status_Reason": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "5b3aaa10-8a25-4bd2-a767-a17c673c2bef"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutionstatustypes",
+                      "item/cr9fa_name": "\"\"",
+                      "item/cr9fa_statustypecode": "@items('Apply_to_each')['Status']",
+                      "item/cr9fa_apmsolutionstatustypeid": "@variables('guid')"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Add_new_IT_Solution_2": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "15537f4f-7b6c-4928-b4cc-57b1b65387ec"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "CreateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_itsolutions",
+                      "item/cr9fa_name": "\"\"",
+                      "item/cr9fa_solutiondescription": "@items('Apply_to_each')['CI_Description']",
+                      "item/cr9fa_solutionid": "@items('Apply_to_each')['CI_ID']",
+                      "item/cr9fa_solutionname": "@items('Apply_to_each')['CI_Name']",
+                      "item/rpdudev_applicationarchitecturetype": "@items('Apply_to_each')?['ApplicationArchitecture']",
+                      "item/rpdudev_assurancelevelcode": "@items('Apply_to_each')?['AssuranceLevel']",
+                      "item/rpdudev_authenticationtype": "@items('Apply_to_each')?['AuthenticationType']",
+                      "item/rpdudev_availabilityindicator": "@items('Apply_to_each')?['AvailabilityRequired']",
+                      "item/rpdudev_businessvalueindicator": "@items('Apply_to_each')?['BusinessValue']",
+                      "item/rpdudev_clusterportfolio": "@items('Apply_to_each')?['ClusterPortfolio']",
+                      "item/rpdudev_criticalityindicator": "@items('Apply_to_each')?['Criticality']",
+                      "item/rpdudev_datacentre": "@items('Apply_to_each')?['ProdDCName']",
+                      "item/rpdudev_dbsupport": "@items('Apply_to_each')?['DBSupport']",
+                      "item/rpdudev_developmenttype": "@items('Apply_to_each')?['DevType']",
+                      "item/rpdudev_ffscost": "@items('Apply_to_each')?['FFSCost']",
+                      "item/rpdudev_ftecost": "@items('Apply_to_each')?['FTECost']",
+                      "item/rpdudev_futureplanindicator": "@items('Apply_to_each')?['FuturePlans']",
+                      "item/rpdudev_highavailabilitysupportflag": "@items('Apply_to_each')?['HighAvailability']",
+                      "item/rpdudev_hostingarrangement": "@items('Apply_to_each')?['HostingArrangement']",
+                      "item/rpdudev_hostingcost": "@items('Apply_to_each')?['HostingCost']",
+                      "item/rpdudev_hostingenvname": "@items('Apply_to_each')?['HostingEnvName']",
+                      "item/cr9fa_itsolutionid": "@variables('guid')",
+                      "item/rpdudev_licensingcost": "@items('Apply_to_each')?['LicensingCost']",
+                      "item/rpdudev_nonprodsupport": "@items('Apply_to_each')?['NonProdSupport']",
+                      "item/cr9fa_orgaccountabilityindicator": "@items('Apply_to_each')?['OrgAccountability']",
+                      "item/rpdudev_prodsupport": "@items('Apply_to_each')?['ProdSupport']",
+                      "item/rpdudev_serverossupport": "@items('Apply_to_each')?['ServerOSSupport']",
+                      "item/rpdudev_solutioncomplianceflag": "@items('Apply_to_each')?['ComplianceFunction']",
+                      "item/cr9fa_solutioninstallationdate": "@items('Apply_to_each')['InstallationDate']",
+                      "item/cr9fa_solutionpublicfacingflag": "@items('Apply_to_each')?['PublicFacing']",
+                      "item/rpdudev_solutionstatus": "@items('Apply_to_each')['Status']",
+                      "item/rpdudev_solutionstatusreason": "@items('Apply_to_each')?['StatusReason']",
+                      "item/rpdudev_solutiontype": "@items('Apply_to_each')?['OPSApplicationType']",
+                      "item/rpdudev_solutionusagetype": "@items('Apply_to_each')?['UsageType']",
+                      "item/cr9fa_solutionversionnumber": "@items('Apply_to_each')?['ModelVersion']",
+                      "item/rpdudev_supportlegislatedfunctionflag": "@items('Apply_to_each')?['SupportsLegislatedFunction']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {
+                "Set_variable": [
+                  "Succeeded"
+                ]
+              },
+              "expression": {
+                "equals": [
+                  "@variables('isNew')",
+                  "@true"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "1326a662-a7ea-47db-bc61-f0b0a732d976"
+              },
+              "type": "If"
+            },
+            "Set_variable": {
+              "runAfter": {
+                "Condition": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a32d2ad6-f81e-407e-8b5a-37f911db4147"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "guid",
+                "value": "@{guid()}"
+              }
+            },
+            "Filter_array": {
+              "runAfter": {
+                "assume_the_solution_is_new": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "984537d3-bca3-4313-98af-7cc5784c3efd"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@outputs('List_rows')?['body/value']",
+                "where": "@equals(item()?['cr9fa_solutionid'], items('Apply_to_each')['CI_ID'])"
+              }
+            },
+            "Condition": {
+              "actions": {
+                "Set_variable_3": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "a64dcd7b-18a9-41bc-a0f1-e7710e5676ac"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "isNew",
+                    "value": false
+                  }
+                },
+                "Set_variable_4": {
+                  "runAfter": {
+                    "Set_variable_3": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "a77e38e1-2db0-4165-926c-1057c1825caa"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "guid",
+                    "value": "@{first(body('Filter_array'))['cr9fa_itsolutionid']}"
+                  }
+                },
+                "Update_IT_Solution": {
+                  "runAfter": {
+                    "Set_variable_4": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "4cdfaf56-e4fe-4076-a07e-7bc40bc655d1"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_itsolutions",
+                      "recordId": "@variables('guid')",
+                      "item/cr9fa_name": "@items('Apply_to_each')['CI_ID']",
+                      "item/cr9fa_solutiondescription": "@items('Apply_to_each')['CI_Description']",
+                      "item/cr9fa_solutionid": "@items('Apply_to_each')['CI_ID']",
+                      "item/cr9fa_solutionname": "@items('Apply_to_each')['CI_Name']",
+                      "item/rpdudev_applicationarchitecturetype": "@items('Apply_to_each')?['ApplicationArchitecture']",
+                      "item/rpdudev_assurancelevelcode": "@items('Apply_to_each')?['AssuranceLevel']",
+                      "item/rpdudev_authenticationtype": "@items('Apply_to_each')?['AuthenticationType']",
+                      "item/rpdudev_availabilityindicator": "@items('Apply_to_each')?['AvailabilityRequired']",
+                      "item/rpdudev_businessvalueindicator": "@items('Apply_to_each')?['BusinessValue']",
+                      "item/rpdudev_clusterportfolio": "@items('Apply_to_each')?['ClusterPortfolio']",
+                      "item/rpdudev_criticalityindicator": "@items('Apply_to_each')?['Criticality']",
+                      "item/rpdudev_datacentre": "@items('Apply_to_each')?['ProdDCName']",
+                      "item/rpdudev_dbsupport": "@items('Apply_to_each')?['DBSupport']",
+                      "item/rpdudev_developmenttype": "@items('Apply_to_each')?['DevType']",
+                      "item/rpdudev_ffscost": "@items('Apply_to_each')?['FFSCost']",
+                      "item/rpdudev_ftecost": "@items('Apply_to_each')?['FTECost']",
+                      "item/rpdudev_futureplanindicator": "@items('Apply_to_each')?['FuturePlans']",
+                      "item/rpdudev_highavailabilitysupportflag": "@items('Apply_to_each')?['HighAvailability']",
+                      "item/rpdudev_hostingarrangement": "@items('Apply_to_each')?['HostingArrangement']",
+                      "item/rpdudev_hostingcost": "@items('Apply_to_each')?['HostingCost']",
+                      "item/rpdudev_hostingenvname": "@items('Apply_to_each')?['HostingEnvName']",
+                      "item/rpdudev_licensingcost": "@items('Apply_to_each')?['LicensingCost']",
+                      "item/rpdudev_nonprodsupport": "@items('Apply_to_each')?['NonProdSupport']",
+                      "item/cr9fa_orgaccountabilityindicator": "@items('Apply_to_each')?['OrgAccountability']",
+                      "item/rpdudev_prodsupport": "@items('Apply_to_each')?['ProdSupport']",
+                      "item/rpdudev_serverossupport": "@items('Apply_to_each')?['ServerOSSupport']",
+                      "item/rpdudev_solutioncomplianceflag": "@items('Apply_to_each')?['ComplianceFunction']",
+                      "item/cr9fa_solutioninstallationdate": "@items('Apply_to_each')['InstallationDate']",
+                      "item/cr9fa_solutionpublicfacingflag": "@items('Apply_to_each')?['PublicFacing']",
+                      "item/rpdudev_solutionstatus": "@items('Apply_to_each')['Status']",
+                      "item/rpdudev_solutionstatusreason": "@items('Apply_to_each')?['StatusReason']",
+                      "item/rpdudev_solutiontype": "@items('Apply_to_each')?['OPSApplicationType']",
+                      "item/rpdudev_solutionusagetype": "@items('Apply_to_each')?['UsageType']",
+                      "item/cr9fa_solutionversionnumber": "@items('Apply_to_each')?['ModelVersion']",
+                      "item/rpdudev_supportlegislatedfunctionflag": "@items('Apply_to_each')?['SupportsLegislatedFunction']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Update_Solution_Status": {
+                  "runAfter": {
+                    "Update_IT_Solution": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "4f2fc5ec-752e-4e8e-90d2-9ef55f7ba908"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutionstatuses",
+                      "recordId": "@variables('guid')",
+                      "item/cr9fa_statuseffectivedate": "@utcNow()"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Update_Status_Reason": {
+                  "runAfter": {
+                    "Update_Solution_Status": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "551b021b-ddcd-425b-b76e-966b52026b13"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmstatusreasons",
+                      "recordId": "@variables('guid')",
+                      "item/rpdudev_statusreason": "@items('Apply_to_each')?['StatusReason']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Update_Solution_Status_Type": {
+                  "runAfter": {
+                    "Update_Status_Reason": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "ab8782f5-4614-4414-840c-fa660f1252b6"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutionstatustypes",
+                      "recordId": "@variables('guid')",
+                      "item/cr9fa_statustypecode": "@items('Apply_to_each')['Status']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Update_Solution_Technical_Info": {
+                  "runAfter": {
+                    "Update_Solution_Status_Type": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "fac5cf00-46a3-4f6a-b33c-ca4e095e629c"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "UpdateRecord",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "cr9fa_apmsolutiontechnicalinfos",
+                      "recordId": "@variables('guid')",
+                      "item/cr9fa_name": "@items('Apply_to_each')?['ApplicationArchitecture']",
+                      "item/cr9fa_solutiondevelopmenttypecode": "@items('Apply_to_each')?['DevType']"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                }
+              },
+              "runAfter": {
+                "Filter_array": [
+                  "Succeeded"
+                ]
+              },
+              "expression": {
+                "equals": [
+                  "@length(body('Filter_array'))",
+                  1
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "2fe3c375-f598-4b86-9f4a-3723206f3b02"
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e62549d8-1493-48be-943b-09d074d8cffc"
+          },
+          "type": "Foreach"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

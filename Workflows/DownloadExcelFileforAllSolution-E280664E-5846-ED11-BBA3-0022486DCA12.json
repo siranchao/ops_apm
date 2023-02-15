@@ -1,0 +1,746 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "rpdudev_sharedsharepointonline_3d720"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "8449a4bf-bf7a-4a01-b490-c8de9e57cefe"
+          },
+          "type": "Request",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "HTTP": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "e9fd233c-e952-4453-a69b-345634dfec48"
+          },
+          "type": "Http",
+          "inputs": {
+            "method": "PATCH",
+            "uri": "https://smapiuat-ontariogovuat.msappproxy.net/api/RemedyAsset/SearchApplicationsCustom",
+            "headers": {
+              "X-ApiKey": "44b80f81-19bb-4ca2-a425-4b85a52dfb0c"
+            },
+            "body": {
+              "Fields": [],
+              "MaxResults": 100,
+              "Parameters": [
+                {
+                  "Combine": "And",
+                  "Property": "Status",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Deployed"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier1",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Solution"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier2",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Application Solution"
+                    }
+                  ]
+                },
+                {
+                  "Combine": "And",
+                  "Property": "ProductCategorizationTier3",
+                  "Operator": "Equals",
+                  "Values": [
+                    {
+                      "Value": "Business Support"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "Parse_JSON": {
+          "runAfter": {
+            "HTTP": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f91d7979-e7d1-4c6f-9cc1-f1f109e2dfa2"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@body('HTTP')",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "OwnershipType": {
+                    "type": "string"
+                  },
+                  "ApplicationType": {
+                    "type": "string"
+                  },
+                  "CI_ID": {
+                    "type": "string"
+                  },
+                  "AssetClass": {
+                    "type": "string"
+                  },
+                  "Status": {
+                    "type": "string"
+                  },
+                  "AssigneeGroupPermissions": {
+                    "type": "string"
+                  },
+                  "ASTAttributeInstanceId": {
+                    "type": "string"
+                  },
+                  "BookValue": {
+                    "type": "integer"
+                  },
+                  "Site": {
+                    "type": "string"
+                  },
+                  "ProductCategorizationTier1": {
+                    "type": "string"
+                  },
+                  "ClassId": {
+                    "type": "string"
+                  },
+                  "Company": {
+                    "type": "string"
+                  },
+                  "Cost": {
+                    "type": "integer"
+                  },
+                  "CostCenter": {
+                    "type": "string"
+                  },
+                  "CreateDate": {
+                    "type": "string"
+                  },
+                  "CurrentState": {
+                    "type": "string"
+                  },
+                  "DataSetId": {
+                    "type": "string"
+                  },
+                  "Depreciated": {
+                    "type": "string"
+                  },
+                  "ExternalProgramNumber": {
+                    "type": "string"
+                  },
+                  "FailedAutomaticIdentification": {
+                    "type": "string"
+                  },
+                  "FixedAsset": {
+                    "type": "string"
+                  },
+                  "Floor": {
+                    "type": "string"
+                  },
+                  "Impact": {
+                    "type": "string"
+                  },
+                  "ImpactComputationModel": {
+                    "type": "string"
+                  },
+                  "InstallationDate": {
+                    "type": "string"
+                  },
+                  "InstanceId": {
+                    "type": "string"
+                  },
+                  "Inventory": {
+                    "type": "string"
+                  },
+                  "ProductCategorizationTier3": {
+                    "type": "string"
+                  },
+                  "LastModifiedBy": {
+                    "type": "string"
+                  },
+                  "Manufacturer": {
+                    "type": "string"
+                  },
+                  "MarketValue": {
+                    "type": "integer"
+                  },
+                  "MGSCIID": {
+                    "type": "string"
+                  },
+                  "MGSFromEIT": {
+                    "type": "string"
+                  },
+                  "ProductName": {
+                    "type": "string"
+                  },
+                  "ModifiedDate": {
+                    "type": "string"
+                  },
+                  "CI_Name": {
+                    "type": "string"
+                  },
+                  "NormalizationStatus": {
+                    "type": "string"
+                  },
+                  "NotesLog": {
+                    "type": "string"
+                  },
+                  "ApplicationArchitecture": {
+                    "type": "string"
+                  },
+                  "AssuranceLevel": {
+                    "type": "string"
+                  },
+                  "AuthenticationType": {
+                    "type": "string"
+                  },
+                  "AvailabilityRequired": {
+                    "type": "string"
+                  },
+                  "BusinessValue": {
+                    "type": "string"
+                  },
+                  "ChangeWindow": {
+                    "type": "string"
+                  },
+                  "ClusterPortfolio": {
+                    "type": "string"
+                  },
+                  "ComplianceFunction": {
+                    "type": "string"
+                  },
+                  "CriticalBusinessPeriod": {
+                    "type": "string"
+                  },
+                  "DBSupport": {
+                    "type": "string"
+                  },
+                  "DevType": {
+                    "type": "string"
+                  },
+                  "FuturePlans": {
+                    "type": "string"
+                  },
+                  "HighAvailability": {
+                    "type": "string"
+                  },
+                  "HostingEnvName": {
+                    "type": "string"
+                  },
+                  "NonProdSupport": {
+                    "type": "string"
+                  },
+                  "OldestDBName": {
+                    "type": "string"
+                  },
+                  "OldestOSPlatform": {
+                    "type": "string"
+                  },
+                  "OrgAccountability": {
+                    "type": "string"
+                  },
+                  "ProdDCName": {
+                    "type": "string"
+                  },
+                  "ProdSupport": {
+                    "type": "string"
+                  },
+                  "OPSProductSubcategory": {
+                    "type": "string"
+                  },
+                  "PublicFacing": {
+                    "type": "string"
+                  },
+                  "ScopeOfApplication": {
+                    "type": "string"
+                  },
+                  "ServerOSSupport": {
+                    "type": "string"
+                  },
+                  "UsageType": {
+                    "type": "string"
+                  },
+                  "Priority": {
+                    "type": "string"
+                  },
+                  "ReceivedDate": {
+                    "type": "string"
+                  },
+                  "ReconciliationIdentity": {
+                    "type": "string"
+                  },
+                  "ReconciliationMergeStatus": {
+                    "type": "string"
+                  },
+                  "Region": {
+                    "type": "string"
+                  },
+                  "RequestID": {
+                    "type": "string"
+                  },
+                  "SalesTax": {
+                    "type": "integer"
+                  },
+                  "ScheduleType": {
+                    "type": "string"
+                  },
+                  "CI_Description": {
+                    "type": "string"
+                  },
+                  "SiteGroup": {
+                    "type": "string"
+                  },
+                  "StatusReason": {
+                    "type": "string"
+                  },
+                  "Submitter": {
+                    "type": "string"
+                  },
+                  "Supported": {
+                    "type": "string"
+                  },
+                  "TaxCredit": {
+                    "type": "integer"
+                  },
+                  "TokenId": {
+                    "type": "string"
+                  },
+                  "TotalPurchaseCost": {
+                    "type": "integer"
+                  },
+                  "ProductCategorizationTier2": {
+                    "type": "string"
+                  },
+                  "UnitPrice": {
+                    "type": "integer"
+                  },
+                  "UserDisplayObjectName": {
+                    "type": "string"
+                  },
+                  "ModelVersion": {
+                    "type": "string"
+                  },
+                  "WriteSecurity": {
+                    "type": "string"
+                  },
+                  "Y2KCompliant": {
+                    "type": "string"
+                  },
+                  "Relationships": {
+                    "type": "array"
+                  },
+                  "OPSApplicationType": {
+                    "type": "string"
+                  },
+                  "AvailabilitySupported": {
+                    "type": "string"
+                  },
+                  "OPSMajorBusFunction": {
+                    "type": "string"
+                  },
+                  "NumberOfUsers": {
+                    "type": "integer"
+                  },
+                  "Urgency": {
+                    "type": "string"
+                  },
+                  "CITag": {
+                    "type": "string"
+                  },
+                  "AdditionalInformation": {
+                    "type": "string"
+                  },
+                  "DataSensitivityRating": {
+                    "type": "string"
+                  },
+                  "OPSSensitivityData": {
+                    "type": "string"
+                  },
+                  "TagNumber": {
+                    "type": "string"
+                  },
+                  "PrimaryCapability": {
+                    "type": "string"
+                  },
+                  "AODACompliant": {
+                    "type": "string"
+                  },
+                  "BusinessContinuityPlan": {
+                    "type": "string"
+                  },
+                  "DisasterRecoveryPlan": {
+                    "type": "string"
+                  },
+                  "MAPSIdentified": {
+                    "type": "string"
+                  },
+                  "PIACompleted": {
+                    "type": "string"
+                  },
+                  "ProcessingType": {
+                    "type": "string"
+                  },
+                  "RevenueGenerating": {
+                    "type": "string"
+                  },
+                  "SLAInPlace": {
+                    "type": "string"
+                  },
+                  "SupportsLegislatedFunction": {
+                    "type": "string"
+                  },
+                  "TRACompleted": {
+                    "type": "string"
+                  },
+                  "SystemRole": {
+                    "type": "string"
+                  },
+                  "AvailableDate": {
+                    "type": "string"
+                  },
+                  "RecoveryPointObjective": {
+                    "type": "string"
+                  },
+                  "RecoveryTimeObjectives": {
+                    "type": "string"
+                  },
+                  "AdequateOffsiteBackupRestore": {
+                    "type": "string"
+                  },
+                  "ApplicationMakeup": {
+                    "type": "string"
+                  },
+                  "AvailabilityExternal": {
+                    "type": "string"
+                  },
+                  "AvailabilityFunded": {
+                    "type": "string"
+                  },
+                  "AvailabilityInternal": {
+                    "type": "string"
+                  },
+                  "DatePlannedRetirement": {
+                    "type": "string"
+                  },
+                  "DegradedPerformanceAllowed": {
+                    "type": "string"
+                  },
+                  "HostingArrangement": {
+                    "type": "string"
+                  },
+                  "NumberOfUsersExternal": {
+                    "type": "string"
+                  },
+                  "NumberOfUsersOPS": {
+                    "type": "string"
+                  },
+                  "OPSArchitectureGating": {
+                    "type": "string"
+                  },
+                  "PersonalInformationHandled": {
+                    "type": "string"
+                  },
+                  "DateLastUpgradedFunctionality": {
+                    "type": "string"
+                  },
+                  "OffsiteBackupRestore": {
+                    "type": "string"
+                  },
+                  "SerialNumber": {
+                    "type": "string"
+                  },
+                  "NetNewRefresh": {
+                    "type": "string"
+                  },
+                  "FFSCost": {
+                    "type": "integer"
+                  },
+                  "HostingCost": {
+                    "type": "integer"
+                  },
+                  "LicensingCost": {
+                    "type": "integer"
+                  },
+                  "SystemEnvironment": {
+                    "type": "string"
+                  },
+                  "FTECost": {
+                    "type": "integer"
+                  },
+                  "OwnerName": {
+                    "type": "string"
+                  },
+                  "PartNumber": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "OwnershipType",
+                  "ApplicationType",
+                  "CI_ID",
+                  "AssetClass",
+                  "Status",
+                  "AssigneeGroupPermissions",
+                  "ASTAttributeInstanceId",
+                  "BookValue",
+                  "ProductCategorizationTier1",
+                  "ClassId",
+                  "Company",
+                  "Cost",
+                  "CostCenter",
+                  "CreateDate",
+                  "DataSetId",
+                  "Depreciated",
+                  "FailedAutomaticIdentification",
+                  "FixedAsset",
+                  "ImpactComputationModel",
+                  "InstallationDate",
+                  "InstanceId",
+                  "Inventory",
+                  "ProductCategorizationTier3",
+                  "LastModifiedBy",
+                  "MarketValue",
+                  "MGSCIID",
+                  "MGSFromEIT",
+                  "ModifiedDate",
+                  "CI_Name",
+                  "NormalizationStatus",
+                  "Priority",
+                  "ReconciliationIdentity",
+                  "ReconciliationMergeStatus",
+                  "RequestID",
+                  "SalesTax",
+                  "ScheduleType",
+                  "CI_Description",
+                  "Submitter",
+                  "Supported",
+                  "TaxCredit",
+                  "TokenId",
+                  "TotalPurchaseCost",
+                  "ProductCategorizationTier2",
+                  "UnitPrice",
+                  "UserDisplayObjectName",
+                  "Y2KCompliant",
+                  "Relationships"
+                ]
+              }
+            }
+          }
+        },
+        "Create_file": {
+          "runAfter": {
+            "Create_CSV_table": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "14f97f19-5f51-48a2-b6e9-7bb98d9f4140"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "https://ontariogov.sharepoint.com/sites/RapidPrototypeDesignUnit",
+              "folderPath": "/Shared Documents/APM/Bilal",
+              "name": "@{utcNow()}.csv",
+              "body": "@body('Create_CSV_table')"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        },
+        "Create_sharing_link_for_a_file_or_folder": {
+          "runAfter": {
+            "Create_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7bdace99-fc82-45dd-b1b3-f58bf4672199"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "CreateSharingLink",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "https://ontariogov.sharepoint.com/sites/RapidPrototypeDesignUnit",
+              "table": "8e240ece-41b0-45b4-b7df-aef2ba8002b0",
+              "id": "@outputs('Create_file')?['body/ItemId']",
+              "permission/type": "edit",
+              "permission/scope": "organization"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "runAfter": {
+            "Create_sharing_link_for_a_file_or_folder": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9eb8c910-bc3f-4291-abc2-ef3794fde92b"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "filelink": "@outputs('Create_sharing_link_for_a_file_or_folder')?['body/link/webUrl']"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "filelink": {
+                  "title": "FileLink",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Create_CSV_table": {
+          "runAfter": {
+            "Select": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "94946cad-e1b4-479a-ad83-15338c8bc934"
+          },
+          "type": "Table",
+          "inputs": {
+            "from": "@body('Select')",
+            "format": "CSV"
+          }
+        },
+        "Select": {
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e5d91062-d8aa-4052-8b12-a983187230a0"
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@body('Parse_JSON')",
+            "select": {
+              "Cl ID": "@item()['CI_ID']",
+              "CI Name": "@item()['CI_Name']",
+              "Description": "@item()['CI_Description']",
+              "Status": "@item()['Status']",
+              "Status Reason": "@item()?['StatusReason']",
+              "Product Categorization Tier 1": "@item()['ProductCategorizationTier1']",
+              "Product Categorization Tier 2": "@item()['ProductCategorizationTier2']",
+              "Installation Date": "@item()['InstallationDate']",
+              "Solution Age (years)": "@item()?['UsageType']",
+              "Org Accountability": "@item()?['OrgAccountability']",
+              "Usage Type": "@item()?['UsageType']",
+              "Business Value": "@item()?['BusinessValue']",
+              "Future Plans": "@item()?['FuturePlans']",
+              "Public Facing": "@item()?['PublicFacing']",
+              "High Availability": "@item()?['HighAvailability']",
+              "Compliance Function": "@item()?['ComplianceFunction']",
+              "Supports Legislated Function": "@item()?['SupportsLegislatedFunction']",
+              "AODA Compliant": "@item()?['AODACompliant']",
+              "Cluster Portfolio": "@item()?['ClusterPortfolio']",
+              "Solution Type": "@item()?['OPSApplicationType']",
+              "Major Business Function": "@item()?['OPSMajorBusFunction']",
+              "External Program Number": "@item()?['ExternalProgramNumber']",
+              "Application Architecture": "@item()?['ApplicationArchitecture']",
+              "Prod Support": "@item()?['ProdSupport']",
+              "Non-Prod Support": "@item()?['NonProdSupport']",
+              "Server OS Support": "@item()?['ServerOSSupport']",
+              "DB Support": "@item()?['DBSupport']",
+              "Dev Type": "@item()?['DevType']",
+              "Oldest DB Name": "@item()?['OldestDBName']",
+              "Oldest OS Platform": "@item()?['OldestOSPlatform']",
+              "Hosting Env. Name": "@item()?['HostingEnvName']",
+              "Hosting Arrangement": "@item()?['HostingArrangement']",
+              "Prod DC Name": "@item()?['ProdDCName']",
+              "Authentication Type": "@item()?['AuthenticationType']",
+              "Assurance Level": "@item()?['AssuranceLevel']",
+              "Disaster Recovery Plan (DRP)": "@item()?['DisasterRecoveryPlan']",
+              "PIA Completed": "@item()?['PIACompleted']",
+              "TRA Completed": "@item()?['TRACompleted']",
+              "Hosting Cost": "@item()?['HostingCost']",
+              "Licensing Cost": "@item()?['LicensingCost']",
+              "FTE Cost": "@item()?['FTECost']",
+              "FFS Cost": "@item()?['FFSCost']",
+              "Date of Last Data Verification": "@item()?['DateLastUpgradedFunctionality']"
+            }
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

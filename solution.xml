@@ -1,0 +1,171 @@
+<ImportExportXml version="9.2.22121.146" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>RPDUAppAPM</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="rpdu.rd.apm" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>1.0.0.17</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>RPDU_Dev_Solution_Publisher</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="RPDU DEV" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="RPDU Solution Publisher for DEV environment" languagecode="1033" />
+      </Descriptions>
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>rpdudev</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>69126</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="cr9fa_ampsolutioncapability" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_ampsolutionfunction" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmassociation" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmbusinessbranch" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmbusinessdivision" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmbusinesssector" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmbusinesssolutionusage" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmbusinessunit" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmclusterportfolio" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmdatacentrelocation" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmgovernmentprogram1" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmgovernmentprogram2" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmhostingproduct" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmhostservicevendor" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmhosttype" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmitproduct" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmministry" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmportfoliosolution" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmproductcategoryclassfication" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmproductmaker" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmprogramsolutionusage" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsectorcapability" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsectorprogram" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionassessment" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionassessmenttype" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionassessmentvalue" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionassociation" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionbusinessinfo" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutioncost" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionhostinstance" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionproduct" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionstatus" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutionstatustype" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmsolutiontechnicalinfo" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_apmstatusreason" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_clustersolutionalignmentresult" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_hostenvironment" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_itsolution" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_portfoliorelationship" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_productcategory" behavior="0" />
+      <RootComponent type="1" schemaName="cr9fa_programtype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmactualmeasure" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmassessmentruleusage" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmassurancelevel" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmbusinesscapability" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmbusinesscapabilityassociation" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmbusinesscapabilitylevel" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmbusinessrule" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmbusinessruletype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmcostcategory" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmitsolutionusagetype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmmeasurethreshold" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmopsitcluster" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmperformancemeasure" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmperformancemeasuretype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmperiod" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmrulesource" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmrulesourcetype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmsolutioncapabilityassessment" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmsolutioncostinstance" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmsolutiontripassessment" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmsolutiontripassessmenttype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmsolutiontype" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmtripassessmentvalue" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmuserfeedbacks" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_apmuserlogin" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_user" behavior="0" />
+      <RootComponent type="1" schemaName="rpdudev_userrole" behavior="0" />
+      <RootComponent type="9" schemaName="rpdudev_apm_association_types" behavior="0" />
+      <RootComponent type="9" schemaName="rpdudev_apm_association_types_prod" behavior="0" />
+      <RootComponent type="9" schemaName="rpdudev_testchoiceoptions" behavior="0" />
+      <RootComponent type="9" schemaName="rpdudev_userroles" behavior="0" />
+      <RootComponent type="29" id="{496a1bbf-ee77-ed11-81ac-000d3af4e751}" behavior="0" />
+      <RootComponent type="29" id="{89066070-e839-ed11-9db1-000d3af4c81e}" behavior="0" />
+      <RootComponent type="29" id="{d4d9a13d-7a54-ed11-9561-0022486d7204}" behavior="0" />
+      <RootComponent type="29" id="{e280664e-5846-ed11-bba3-0022486dca12}" behavior="0" />
+      <RootComponent type="29" id="{f35e897f-554e-ed11-bba3-000d3af41188}" behavior="0" />
+      <RootComponent type="62" schemaName="rpdudev_APMAdmin" behavior="0" />
+      <RootComponent type="80" schemaName="rpdudev_APMAdmin" behavior="0" />
+      <RootComponent type="300" schemaName="cr9fa_opsapplicationui_e960c" behavior="0" />
+      <RootComponent type="300" schemaName="rpdudev_apmapp_a00bc" behavior="0" />
+    </RootComponents>
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
+        <Dependent type="80" schemaName="rpdudev_APMAdmin" displayName="APM-Admin" />
+      </MissingDependency>
+    </MissingDependencies>
+  </SolutionManifest>
+</ImportExportXml>
