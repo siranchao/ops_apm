@@ -1,7 +1,7 @@
 ## Application Portfolio Manager
 
 This application is designed and developed by rpdu, using powerApps + powerAutomate + Dataverse
-- Version 1.0.0.17, for OPS internal use only
+- Version 1.0.17, for OPS internal use only
 - For full app demp please visit: [Demo Video](https://youtu.be/ZTjdyVZpngI)
 
 ## Learn More
