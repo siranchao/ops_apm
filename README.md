@@ -2,7 +2,7 @@
 
 This application is designed and developed by rpdu, using powerApps + powerAutomate + Dataverse
 - Version 1.0.0.17, for OPS internal use only
-- For full app demp please visit: [Demo Video](https://youtu.be/sGeUa2qqNys)
+- For full app demp please visit: [Demo Video](https://youtu.be/ZV3k__B-s4k)
 
 ## Learn More
 To learn more about Microsoft Power Platform, take a look at the following resources:
